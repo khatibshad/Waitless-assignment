@@ -9,24 +9,14 @@ import SwiftUI
 
 struct WATextView: View {
     let text: String
-    let style: WATextStyle
+    var style: WATextStyle = .body
+    var textColor: Color = .black
 
     var state: WATextState = .normal
     var multilineAlignment: TextAlignment = .leading
 
     private var config: WATextStyleConfig {
         style.config
-    }
-
-    private var textColor: Color {
-        switch state {
-        case .normal:
-            return config.normalColor
-        case .selected:
-            return config.selectedColor ?? config.normalColor
-        case .disabled:
-            return config.disabledColor ?? config.normalColor
-        }
     }
 
     var body: some View {
@@ -40,7 +30,6 @@ struct WATextView: View {
 #Preview {
     WATextView(
         text: "This is body text",
-        style: .body
     )
 }
 

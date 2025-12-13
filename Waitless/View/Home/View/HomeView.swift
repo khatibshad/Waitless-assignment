@@ -16,12 +16,13 @@ class HomeViewModel: ObservableObject {
 
 struct HomeView: View {
     
+    @EnvironmentObject var coordinator: MainCoordinator
     @ObservedObject var vm: HomeViewModel = .init()
     
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
-                WATextField(placeholder: "Search", text: $vm.search)
+                WATextField(placeholder: "Search", text: $vm.search, rightView: .init(image: Image("search"), action: {}))
                 VStack {
                     // MapView
                     HospitalMapView(
@@ -40,7 +41,11 @@ struct HomeView: View {
             RoundedCorner(radius: 14, corners: [.bottomLeft, .bottomRight])
         )
         .padding()
+        .onAppear {
+            coordinator.navigationController.title = "Home"
+        }
         .navigationTitle("Find Hospital")
+        .navigationBarTitleDisplayMode(.large)
     }
 }
 

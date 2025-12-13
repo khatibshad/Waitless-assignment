@@ -16,14 +16,14 @@ struct DoctorsView: View {
         ZStack {
             Color.white.ignoresSafeArea()
             VStack(spacing: 12) {
-                WATextField(placeholder: "Search", text: $search)
+                WATextField(placeholder: "Search", text: $search, rightView: .init(image: Image("search"), action: {}))
                     .padding(.horizontal)
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.flexible())], spacing: 0) {
                         ForEach(Doctor.doctors) { doc in
                             DoctorRowView(doctor: doc)
                                 .onTapGesture {
-                                    coordinator.push(DoctorView(doctor: doc))
+                                    coordinator.push(DoctorView(doctor: doc), title: "Doctors")
                                 }
                         }
                     }
@@ -32,7 +32,6 @@ struct DoctorsView: View {
             }
             
         }
-        .navigationTitle("test")
         .background(Color.white)
     }
 }

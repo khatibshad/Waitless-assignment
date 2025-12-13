@@ -9,6 +9,11 @@ import SwiftUI
 import UIKit
 
 struct WATextField: View {
+    
+    struct TxtAction {
+        let image: Image
+        let action: () -> Void
+    }
 
     // MARK: - Public API
     let placeholder: String
@@ -20,6 +25,7 @@ struct WATextField: View {
     var rules: [WAValidationRule] = []
     var trailingView: (() -> AnyView)? = nil
     var maxLength: Int? = nil
+    var rightView: TxtAction?
 
     // MARK: - State
     @State private var state: WATextFieldState = .normal
@@ -35,7 +41,8 @@ struct WATextField: View {
         cornerRadius: CGFloat = 12,
         rules: [WAValidationRule] = [],
         maxLength: Int? = nil,
-        trailingView: (() -> AnyView)? = nil
+        trailingView: (() -> AnyView)? = nil,
+        rightView: TxtAction? = nil
     ) {
         self.placeholder = placeholder
         self._text = text
@@ -45,6 +52,7 @@ struct WATextField: View {
         self.rules = rules
         self.maxLength = maxLength
         self.trailingView = trailingView
+        self.rightView = rightView
         self._isSecureText = State(initialValue: isSecure)
     }
 
@@ -88,7 +96,7 @@ private extension WATextField {
 
                 if text == "" {
                     Text(placeholder)
-                        .foregroundColor(.gray.opacity(0.6))
+                        .foregroundColor(.black.opacity(0.6))
                         .padding(.horizontal, 12)
                         .opacity(text.isEmpty ? 1 : 0)
                         .allowsHitTesting(false)
@@ -106,10 +114,17 @@ private extension WATextField {
                     isSecureText.toggle()
                 } label: {
                     Image(systemName: isSecureText ? "eye.slash" : "eye")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.black)
                 }
             } else if let trailingView {
                 trailingView()
+            } else if let rightView = self.rightView {
+                Button {
+                    rightView.action()
+                } label: {
+                    rightView.image
+                        .foregroundColor(.black)
+                }
             }
         }
         .font(.custom("Shabnam-FD", size: 14))
@@ -139,7 +154,7 @@ private extension WATextField {
         case .disabled:
             return .clear
         default:
-            return .gray.opacity(0.4)
+            return .black.opacity(0.4)
         }
     }
 

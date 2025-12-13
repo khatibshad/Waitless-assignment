@@ -13,6 +13,7 @@ struct CoordinatorContainer<Content: View>: UIViewControllerRepresentable {
     @ObservedObject var coordinator: MainCoordinator
     let rootView: Content
     let transparent: Bool
+    let title: String?
     
     func makeUIViewController(context: Context) -> UINavigationController {
         if transparent {
@@ -27,6 +28,8 @@ struct CoordinatorContainer<Content: View>: UIViewControllerRepresentable {
         }
         
         let hosting = UIHostingController(rootView: rootView.environmentObject(coordinator))
+        hosting.title = title
+        coordinator.navigationController.navigationBar.prefersLargeTitles = true
         coordinator.navigationController.viewControllers = [hosting]
         return coordinator.navigationController
     }
@@ -79,8 +82,10 @@ class MainCoordinator: ObservableObject {
     }
     
     // Push a SwiftUI view
-    func push<Content: View>(_ view: Content, animated: Bool = true) {
+    func push<Content: View>(_ view: Content, title: String?, animated: Bool = true) {
         let hosting = UIHostingController(rootView: view.toolbar(.visible, for: .navigationBar).environmentObject(self))
+        hosting.navigationItem.title = title
+        hosting.navigationItem.largeTitleDisplayMode = .never
         navigationController.pushViewController(hosting, animated: animated)
     }
     

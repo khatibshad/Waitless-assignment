@@ -16,23 +16,23 @@ enum WAColor {
     static let accent = Color("Accent")
 
     // MARK: - Text
-    static let textPrimary = Color("TextPrimary")
-    static let textSecondary = Color("TextSecondary")
-    static let textDisabled = Color("TextDisabled")
+    static let textPrimary = Color.black
+    static let textSecondary = Color(hex: "#5A5050")
+    static let textDisabled = Color.gray
 
     // MARK: - Background
-    static let background = Color("Background")
+    static let background = Color.white
     static let surface = Color("Surface")
 
     // MARK: - Border
-    static let border = Color("Border")
-    static let divider = Color("Divider")
+    static let border = Color.gray
+    static let divider = Color.gray
 
     // MARK: - State
-    static let success = Color("Success")
-    static let error = Color("Error")
-    static let warning = Color("Warning")
-    static let disabled = Color("Disabled")
+    static let success = Color.green
+    static let error = Color.red
+    static let warning = Color.yellow
+    static let disabled = Color.red
 }
 
 extension Color {

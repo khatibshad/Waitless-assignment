@@ -36,7 +36,7 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             
-            CoordinatorContainer(coordinator: homeCoordinator, rootView: HomeView(), transparent: false)
+            CoordinatorContainer(coordinator: homeCoordinator, rootView: HomeView(), transparent: false, title: "Home")
                 .tabItem {
                     tabItem(
                         tab: .home,
@@ -46,7 +46,7 @@ struct ContentView: View {
                 }
                 .tag(WATab.home)
             
-            CoordinatorContainer(coordinator: doctorCoordinator, rootView: DoctorsView(), transparent: false)
+            CoordinatorContainer(coordinator: doctorCoordinator, rootView: DoctorsView(), transparent: false, title: "Doctors")
                 .tabItem {
                     tabItem(
                         tab: .people,
@@ -56,7 +56,7 @@ struct ContentView: View {
                 }
                 .tag(WATab.people)
             
-            CoordinatorContainer(coordinator: profileCoordinator, rootView: LoginView(), transparent: false)
+            LoginView()
                 .tabItem {
                     tabItem(
                         tab: .profile,

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HospitalRow: View {
     
-    
     var body: some View {
         HStack(spacing: 24) {
             WATextView(text: "H", style: .custom(style: .init(font: .headline, normalColor: .white, selectedColor: nil, disabledColor: nil)))
@@ -21,12 +20,12 @@ struct HospitalRow: View {
                 WATextView(text: "North York General Hospital", style: .title)
                 HStack {
                     VStack(alignment: .leading) {
-                        WATextView(text: "10", style: .caption)
-                        WATextView(text: "km", style: .caption)
+                        WATextView(text: "10", style: .caption, textColor: WAColor.textSecondary)
+                        WATextView(text: "km", style: .caption, textColor: WAColor.textSecondary)
                     }
                     VStack(alignment: .leading) {
-                        WATextView(text: "21 min", style: .caption)
-                        WATextView(text: "Waiting Time", style: .caption)
+                        WATextView(text: "21 min", style: .caption, textColor: WAColor.textSecondary)
+                        WATextView(text: "Waiting Time", style: .caption, textColor: WAColor.textSecondary)
                     }
                     Spacer()
                 }

@@ -17,7 +17,7 @@ struct LoginView: View {
             VStack(spacing: 0) {
                 VStack {
                     Image("logo")
-                    WATextView(text: "Waitless\nER", style: .custom(style: .init(font: .title, normalColor: .white, selectedColor: nil, disabledColor: nil)), multilineAlignment: .center)
+                    WATextView(text: "Waitless\nER", style: .title, textColor: .white, multilineAlignment: .center)
                     Spacer()
                 }
                 .padding()
@@ -53,6 +53,8 @@ struct LoginView: View {
             
         }
         .navigationTitle("Profile")
+        .onAppear {
+        }
     }
     
     
