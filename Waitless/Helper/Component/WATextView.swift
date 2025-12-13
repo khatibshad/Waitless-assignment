@@ -63,6 +63,7 @@ enum WATextStyle {
     case body
     case caption
     case button
+    case custom(style: WATextStyleConfig)
 }
 
 
@@ -70,10 +71,11 @@ extension WATextStyle {
 
     var config: WATextStyleConfig {
         switch self {
-
+        case .custom(let style):
+            return style
         case .title:
             return .init(
-                font: .custom("Shabnam-FD", size: 20),
+                font: .custom("Shabnam-FD", size: 14),
                 normalColor: .primary,
                 selectedColor: .blue,
                 disabledColor: .gray
@@ -81,7 +83,7 @@ extension WATextStyle {
 
         case .body:
             return .init(
-                font: .custom("Shabnam-FD", size: 14),
+                font: .custom("Shabnam-FD", size: 12),
                 normalColor: .secondary,
                 selectedColor: nil,
                 disabledColor: .gray.opacity(0.6)
@@ -89,7 +91,7 @@ extension WATextStyle {
 
         case .caption:
             return .init(
-                font: .custom("Shabnam-FD", size: 12),
+                font: .custom("Shabnam-FD", size: 10),
                 normalColor: .gray,
                 selectedColor: nil,
                 disabledColor: .gray.opacity(0.4)
