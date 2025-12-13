@@ -13,7 +13,7 @@ enum WAButtonStyle {
 
     // Default style
     static let `default` = WAButtonStyle.background(
-        bgColor: .blue,
+        bgColor: .red,
         textColor: .white
     )
 }
@@ -59,7 +59,7 @@ struct WAButtonView: View {
             }
             .foregroundColor(style.textColor)
             .frame(maxWidth: .infinity)
-            .frame(height: 54)
+            .frame(height: 40)
             .background(style.backgroundColor)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)

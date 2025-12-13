@@ -40,7 +40,7 @@ struct ContentView: View {
                 }
                 .tag(WATab.people)
             
-            ProfileView()
+            LoginView()
                 .tabItem {
                     tabItem(
                         tab: .profile,
