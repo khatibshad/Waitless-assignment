@@ -15,12 +15,28 @@ struct ContentView: View {
         case profile
     }
     
+    @StateObject var homeCoordinator = MainCoordinator()
+    @StateObject var doctorCoordinator = MainCoordinator()
+    @StateObject var profileCoordinator = MainCoordinator()
+    
+    var currentCoordinator: MainCoordinator? {
+        switch selectedTab {
+        case .home:
+            return homeCoordinator
+        case .people:
+            return doctorCoordinator
+        case .profile:
+            return profileCoordinator
+        }
+    }
+
+    
     @State private var selectedTab: WATab = .home
     
     var body: some View {
         TabView(selection: $selectedTab) {
             
-            HomeView()
+            CoordinatorContainer(coordinator: homeCoordinator, rootView: HomeView(), transparent: false)
                 .tabItem {
                     tabItem(
                         tab: .home,
@@ -30,7 +46,7 @@ struct ContentView: View {
                 }
                 .tag(WATab.home)
             
-            DoctorsView()
+            CoordinatorContainer(coordinator: doctorCoordinator, rootView: DoctorsView(), transparent: false)
                 .tabItem {
                     tabItem(
                         tab: .people,
@@ -40,7 +56,7 @@ struct ContentView: View {
                 }
                 .tag(WATab.people)
             
-            LoginView()
+            CoordinatorContainer(coordinator: profileCoordinator, rootView: LoginView(), transparent: false)
                 .tabItem {
                     tabItem(
                         tab: .profile,

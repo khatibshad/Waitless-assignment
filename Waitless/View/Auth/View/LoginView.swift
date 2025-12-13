@@ -52,6 +52,7 @@ struct LoginView: View {
             }
             
         }
+        .navigationTitle("Profile")
     }
     
     

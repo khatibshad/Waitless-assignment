@@ -9,6 +9,9 @@ import SwiftUI
 
 @main
 struct WaitlessApp: App {
+    
+    @StateObject private var coordinator = MainCoordinator()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
