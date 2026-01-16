@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct DirectionSheetView: View {
+    
+    let hospital: Hospital
+    
+    @State private var showApps: Bool = false
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -44,11 +49,18 @@ struct DirectionSheetView: View {
             Spacer()
             
             WAButtonView(title: "Get Direction", action: {
-                
+                showApps = true
             }, style: .background(bgColor: .main, textColor: .white))
         }
         .padding()
         .padding(.horizontal, 12)
+        
+        .sheet(isPresented: $showApps) {
+            SelectMapAppView(hospital: hospital)
+                .presentationDetents([.height(200)])
+                .presentationCornerRadius(12)
+                .presentationDragIndicator(.visible)
+        }
     }
     
     func itemView(title: String, icon: String) -> some View {
@@ -81,5 +93,5 @@ struct DirectionSheetView: View {
 }
 
 #Preview {
-    DirectionSheetView()
+    DirectionSheetView(hospital: .local[0])
 }

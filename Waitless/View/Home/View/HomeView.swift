@@ -19,7 +19,7 @@ struct HomeView: View {
     
     @EnvironmentObject var coordinator: MainCoordinator
     @ObservedObject var vm: HomeViewModel = .init()
-    @State private var presentDirectionView: Bool = false
+    @State private var presentDirectionView: Hospital?
     //@State private var selectedHospital: Hospital?
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -30,8 +30,8 @@ struct HomeView: View {
                 VStack {
                     // MapView
                     HospitalMapView(
-                        locationManager: vm.locationManage, selectedHospital: $vm.selectedHospital, actionHandler: {
-                            presentDirectionView = true
+                        locationManager: vm.locationManage, selectedHospital: $vm.selectedHospital, actionHandler: { hospital in
+                            presentDirectionView = hospital
                         })
                     .frame(maxHeight: .infinity)
                     HospitalListView(vm: .init(selectedHospital: vm.selectedHospital) ,selectAction: { hospital in
@@ -57,8 +57,12 @@ struct HomeView: View {
         }
         .navigationTitle("Find Hospital")
         .navigationBarTitleDisplayMode(.large)
-        .sheet(isPresented: $presentDirectionView) {
-            DirectionSheetView()
+        .sheet(isPresented: Binding(get: { presentDirectionView != nil }, set: { newValue in
+            if !newValue {
+                presentDirectionView = nil
+            }
+        })) {
+            DirectionSheetView(hospital: presentDirectionView!)
                 .presentationDetents([.height(300)])
                 .presentationCornerRadius(24)
                 .presentationDragIndicator(.visible)
