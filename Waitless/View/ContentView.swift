@@ -33,40 +33,109 @@ struct ContentView: View {
     
     @State private var selectedTab: WATab = .home
     
+//    var body: some View {
+//        TabView(selection: $selectedTab) {
+//            
+//            CoordinatorContainer(coordinator: homeCoordinator, rootView: HomeView(), transparent: false, title: "Home")
+//                .tabItem {
+//                    tabItem(
+//                        tab: .home,
+//                        icon: "house",
+//                        title: "Home"
+//                    )
+//                }
+//                .tag(WATab.home)
+//            
+//            CoordinatorContainer(coordinator: doctorCoordinator, rootView: DoctorsView(), transparent: false, title: "Doctors")
+//                .tabItem {
+//                    tabItem(
+//                        tab: .people,
+//                        icon: "person.3",
+//                        title: "People"
+//                    )
+//                }
+//                .tag(WATab.people)
+//            
+//            LoginView()
+//                .tabItem {
+//                    tabItem(
+//                        tab: .profile,
+//                        icon: "person.fill",
+//                        title: "Profile"
+//                    )
+//                }
+//                .tag(WATab.profile)
+//        }
+//        .tint(.main)
+//    }
+    
+    
     var body: some View {
-        TabView(selection: $selectedTab) {
+        ZStack(alignment: .bottom) {
+            // MARK: - Main Tab Views
+            Group {
+                switch selectedTab {
+                case .home:
+                    CoordinatorContainer(coordinator: homeCoordinator, rootView: HomeView(), transparent: false, title: "Home")
+                case .people:
+                    CoordinatorContainer(coordinator: doctorCoordinator, rootView: DoctorsView(), transparent: false, title: "Doctors")
+                case .profile:
+                    CoordinatorContainer(coordinator: profileCoordinator, rootView: LoginView(), transparent: false, title: "Profile")
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.bottom, currentCoordinator?.isTabBarHidden == true ? 0 : 60)
+            .edgesIgnoringSafeArea(.top)
             
-            CoordinatorContainer(coordinator: homeCoordinator, rootView: HomeView(), transparent: false, title: "Home")
-                .tabItem {
+            // MARK: - Custom Tab Bar
+            if currentCoordinator?.isTabBarHidden == false {
+                HStack(spacing: 12) {
                     tabItem(
                         tab: .home,
                         icon: "house",
                         title: "Home"
                     )
-                }
-                .tag(WATab.home)
-            
-            CoordinatorContainer(coordinator: doctorCoordinator, rootView: DoctorsView(), transparent: false, title: "Doctors")
-                .tabItem {
+                    .onTapGesture {
+                        selectedTab = .home
+                    }
+                    
+                    Spacer()
+                    
                     tabItem(
                         tab: .people,
                         icon: "person.3",
                         title: "People"
                     )
-                }
-                .tag(WATab.people)
-            
-            LoginView()
-                .tabItem {
+                    .onTapGesture {
+                        selectedTab = .people
+                    }
+                    
+                    Spacer()
+                    
                     tabItem(
                         tab: .profile,
                         icon: "person.fill",
                         title: "Profile"
                     )
+                    .onTapGesture {
+                        selectedTab = .profile
+                    }
                 }
-                .tag(WATab.profile)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 30)
+                        .fill(Color.white)
+                        .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: -2)
+                )
+                .padding(.horizontal, 25)
+                .padding(.bottom, 12)
+            }
         }
-        .tint(.main)
+        //.alertView(isPresented: $updateManager.needsUpdate, title: "HOME-ALERT-UPDATE-TITLE".localized, detail: "HOME-ALERT-UPDATE-DETAIL".localized, actions: appUpdateActions())
+        .background(Color.gray)
+        .edgesIgnoringSafeArea(.all)
     }
     
     @ViewBuilder

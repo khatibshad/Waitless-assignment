@@ -16,8 +16,15 @@ struct DoctorsView: View {
         ZStack {
             Color.white.ignoresSafeArea()
             VStack(spacing: 12) {
-                WATextField(placeholder: "Search", text: $search, rightView: .init(image: Image("search"), action: {}))
-                    .padding(.horizontal)
+                HStack(spacing: 0) {
+                    WATextField(placeholder: "Search", text: $search, cornerRadius: 24, rightView: .init(image: Image("search"), action: {}))
+                        .padding(.horizontal)
+                    WAButtonView(title: "", action: {
+                        
+                    }, style: .regular(textColor: .main), image: Image("ic-filter"))
+                    .frame(width: 40)
+
+                }
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.flexible())], spacing: 0) {
                         ForEach(Doctor.doctors) { doc in
@@ -30,9 +37,25 @@ struct DoctorsView: View {
                 }
                 .background(Color.white)
             }
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button {
+                    } label: {
+                        Image("ic-notification")
+                            .renderingMode(.template)
+                    }
+
+                    Button {
+                    } label: {
+                        Image("ic-lang")
+                            .renderingMode(.template)
+                    }
+                }
+            }
             
         }
         .background(Color.white)
+        
     }
 }
 

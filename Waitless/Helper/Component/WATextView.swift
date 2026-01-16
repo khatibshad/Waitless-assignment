@@ -33,6 +33,61 @@ struct WATextView: View {
     )
 }
 
+struct AppTextStyle: ViewModifier {
+    let font: Font
+    let color: Color
+    let lineSpacing: CGFloat
+    let alignment: TextAlignment
+
+    func body(content: Content) -> some View {
+        content
+            .font(font)
+            .foregroundColor(color)
+            .multilineTextAlignment(alignment)
+            .lineSpacing(lineSpacing)
+    }
+}
+
+extension WATextView {
+    func appTextStyle(
+        font: Font,
+        color: Color = .primary,
+        lineSpacing: CGFloat = 0,
+        alignment: TextAlignment = .leading
+    ) -> some View {
+        modifier(
+            AppTextStyle(
+                font: font,
+                color: color,
+                lineSpacing: lineSpacing,
+                alignment: alignment
+            )
+        )
+    }
+    
+    func titleText() -> some View {
+        appTextStyle(
+            font: .system(size: 24, weight: .bold),
+            color: .primary
+        )
+    }
+    
+    func bodyText() -> some View {
+        appTextStyle(
+            font: .system(size: 16),
+            color: .secondary,
+            lineSpacing: 4
+        )
+    }
+    
+    func captionText() -> some View {
+        appTextStyle(
+            font: .system(size: 12),
+            color: .gray
+        )
+    }
+}
+
 
 struct WATextStyleConfig {
     let font: Font
@@ -72,7 +127,7 @@ extension WATextStyle {
 
         case .body:
             return .init(
-                font: .custom("Shabnam-FD", size: 12),
+                font: .custom("Shabnam-FD", size: 14),
                 normalColor: .secondary,
                 selectedColor: nil,
                 disabledColor: .gray.opacity(0.6)
@@ -80,7 +135,7 @@ extension WATextStyle {
 
         case .caption:
             return .init(
-                font: .custom("Shabnam-FD", size: 10),
+                font: .custom("Shabnam-FD", size: 13),
                 normalColor: .gray,
                 selectedColor: nil,
                 disabledColor: .gray.opacity(0.4)

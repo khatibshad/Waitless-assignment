@@ -17,7 +17,7 @@ struct LoginView: View {
             VStack(spacing: 0) {
                 VStack {
                     Image("logo")
-                    WATextView(text: "Waitless\nER", style: .title, textColor: .white, multilineAlignment: .center)
+                    WATextView(text: "Waitless\nER", style: .custom(style: .init(font: .system(size: 32, weight: .bold), normalColor: .white, selectedColor: .white, disabledColor: .white)), textColor: .white, multilineAlignment: .center)
                     Spacer()
                 }
                 .padding()
@@ -28,12 +28,19 @@ struct LoginView: View {
                     VStack(alignment: .leading, spacing: 24) {
                         WATextField(placeholder: "Username", text: $email)
                         WATextField(placeholder: "Password", text: $email, isSecure: true)
-                        WATextView(text: "Forgot Password?", style: .caption, multilineAlignment: .trailing)
-                        WAButtonView(title: "Login", action: {
+                        WATextView(text: "Forgot Password?", style: .caption, textColor: .textBlack, multilineAlignment: .trailing)
+                        WAButtonView(title: "Sign in", action: {
                             
                         })
-                        WATextView(text: "Don’t have an account? Sign up", style: .caption, multilineAlignment: .center)
-                            .frame( maxWidth: .infinity, alignment: .center)
+                        HStack(alignment: .center, spacing: 0) {
+                            WATextView(text: "Don’t have an account? ", style: .caption, textColor: .textGray, multilineAlignment: .center)
+                            WATextView(text: "Sign up", style: .caption, multilineAlignment: .center)
+                        }
+                        .frame( maxWidth: .infinity, alignment: .center)
+                        .onTapGesture {
+                            
+                        }
+
                         WAButtonView(title: "Sign In With Google",action: {
                             
                         }, style: .border(bgColor: .white, textColor: .main, borderColor: .main))

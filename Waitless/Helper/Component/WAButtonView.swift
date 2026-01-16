@@ -10,6 +10,7 @@ import SwiftUI
 enum WAButtonStyle {
     case background(bgColor: Color, textColor: Color)
     case border(bgColor: Color, textColor: Color, borderColor: Color)
+    case regular(textColor: Color)
 
     // Default style
     static let `default` = WAButtonStyle.background(
@@ -85,6 +86,8 @@ extension WAButtonStyle {
             return bgColor
         case .border(let bgColor, _, _):
             return bgColor
+        case .regular(textColor: _):
+            return .clear
         }
     }
 
@@ -93,6 +96,8 @@ extension WAButtonStyle {
         case .background(_, let textColor):
             return textColor
         case .border(_, let textColor, _):
+            return textColor
+        case .regular(textColor: let textColor):
             return textColor
         }
     }
@@ -103,6 +108,8 @@ extension WAButtonStyle {
             return .clear
         case .border(_, _, let borderColor):
             return borderColor
+        case .regular(_):
+            return .clear
         }
     }
 

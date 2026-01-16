@@ -13,15 +13,15 @@ struct FeedbackRow: View {
             HStack {
                 Image("dr-1")
                     .resizable()
-                    .frame(width: 25, height: 25)
+                    .frame(width: 35, height: 35)
                     .clipShape(Circle())
                 VStack(alignment: .leading, spacing: 8) {
-                    WATextView(text: "Sarah Ahmad", style: .title)
-                    WATextView(text: "2024/03/14 , 23:30 p.m", style: .caption)
+                    WATextView(text: "Sarah Ahmad", style: .custom(style: .init(font: .system(size: 16, weight: .bold), normalColor: .textBlack, selectedColor: .textBlack, disabledColor: .textBlack)))
+                    WATextView(text: "2024/03/14 , 23:30 p.m", style: .caption, textColor: .textGray)
                 }
                 Spacer()
             }
-            WATextView(text: "Such an inspiring and knowledgeable doctor!", style: .caption)
+            WATextView(text: "Such an inspiring and knowledgeable doctor!", style: .caption, textColor: .textSecondary)
         }
         .padding(8)
         .background(Color.white)

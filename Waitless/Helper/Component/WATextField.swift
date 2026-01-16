@@ -114,7 +114,7 @@ private extension WATextField {
                     isSecureText.toggle()
                 } label: {
                     Image(systemName: isSecureText ? "eye.slash" : "eye")
-                        .foregroundColor(.black)
+                        .foregroundColor(.main)
                 }
             } else if let trailingView {
                 trailingView()
