@@ -9,23 +9,28 @@ import SwiftUI
 
 struct HospitalRow: View {
     
+    let hospital: Hospital
+    var isSelected: Bool
+    
+    @State var textColor: Color = Color.textGray
+    
     var body: some View {
         HStack(spacing: 24) {
-            WATextView(text: "H", style: .custom(style: .init(font: .headline, normalColor: .white, selectedColor: nil, disabledColor: nil)))
+            WATextView(text: "H", style: .custom(style: .init(font: .system(size: 25, weight: .bold), normalColor: .white, selectedColor: nil, disabledColor: nil)), textColor: .white)
                 .padding()
-                .background(Color.red)
+                .background(isSelected ? .main : .textGray)
                 .clipShape(Circle())
             
             VStack(alignment: .leading, spacing: 5) {
-                WATextView(text: "North York General Hospital", style: .title)
+                WATextView(text: hospital.name, style: .title, textColor: getColor())
                 HStack {
                     VStack(alignment: .leading) {
-                        WATextView(text: "10", style: .caption, textColor: WAColor.textSecondary)
-                        WATextView(text: "km", style: .caption, textColor: WAColor.textSecondary)
+                        WATextView(text: hospital.distance, style: .caption, textColor: getColor())
+                        WATextView(text: "km", style: .caption, textColor: getColor())
                     }
                     VStack(alignment: .leading) {
-                        WATextView(text: "21 min", style: .caption, textColor: WAColor.textSecondary)
-                        WATextView(text: "Waiting Time", style: .caption, textColor: WAColor.textSecondary)
+                        WATextView(text: hospital.time, style: .caption, textColor: getColor())
+                        WATextView(text: "Waiting Time", style: .caption, textColor: getColor())
                     }
                     Spacer()
                 }
@@ -36,8 +41,12 @@ struct HospitalRow: View {
         .cornerRadius(12)
         //.padding(.horizontal)
     }
+    
+    func getColor() -> Color {
+        return isSelected ? .main : .textGray
+    }
 }
 
 #Preview {
-    HospitalRow()
+    HospitalRow(hospital: Hospital.local[0], isSelected: false)
 }

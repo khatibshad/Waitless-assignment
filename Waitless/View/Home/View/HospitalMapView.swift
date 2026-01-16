@@ -20,16 +20,43 @@ struct HospitalMapView: View {
             annotationItems: hospitals
         ) { hospital in
             MapAnnotation(coordinate: hospital.coordinate) {
-                VStack(spacing: 2) {
+                VStack(alignment: .leading, spacing: 2) {
                     Image(systemName: "h.circle.fill")
                         .font(.system(size: 30))
-                        .foregroundColor(.red)
+                        .foregroundColor(.main)
 
-                    Text(hospital.name)
-                        .font(.caption2)
-                        .padding(4)
-                        .background(Color.white)
-                        .cornerRadius(6)
+                    HStack {
+                        HStack {
+                            Text("21\nKM")
+                                .font(.caption)
+                                .foregroundColor(.main)
+                                .multilineTextAlignment(.center)
+                                .background(Color.white)
+                                .padding(.leading, 8)
+                                
+                            HStack {
+                                Image(systemName: "clock")
+                                    .foregroundColor(.white)
+                                VStack {
+                                    Text(hospital.time)
+                                        .font(.caption)
+                                        .foregroundColor(.white)
+                                    Text("Waiting Time")
+                                        .font(.caption2)
+                                        .foregroundColor(.white)
+                                }
+                            }
+                            .padding(4)
+
+                            .frame(maxHeight: .infinity)
+                            .background(Color.main)
+                        }
+                    }
+                    //.padding(8)
+                    .background(Color.white)
+                    .clipShape(
+                        RoundedCorner(radius: 8, corners: .allCorners)
+                    )
                 }
             }
         }

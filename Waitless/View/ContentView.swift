@@ -66,7 +66,7 @@ struct ContentView: View {
                 }
                 .tag(WATab.profile)
         }
-        .tint(.red)
+        .tint(.main)
     }
     
     @ViewBuilder

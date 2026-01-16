@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 
 struct Hospital: Identifiable {
-    let id = UUID()
+    let id: UUID
     let name: String
     let coordinate: CLLocationCoordinate2D
     let distance: String
@@ -17,18 +17,21 @@ struct Hospital: Identifiable {
     
     static var local: [Hospital] = [
         .init(
+            id: UUID(),
             name: "North York General Hospital",
             coordinate: .init(latitude: 43.7615, longitude: -79.4111),
             distance: "10 KM",
             time: "21 min"
         ),
         .init(
+            id: UUID(),
             name: "Markham Diagnostic Centre",
             coordinate: .init(latitude: 43.7705, longitude: -79.3711),
             distance: "12 KM",
             time: "16 min"
         ),
         .init(
+            id: UUID(),
             name: "SM Medical",
             coordinate: .init(latitude: 43.7450, longitude: -79.3900),
             distance: "23 KM",
@@ -36,18 +39,21 @@ struct Hospital: Identifiable {
         ),
         
         .init(
+            id: UUID(),
             name: "North York General Hospital",
             coordinate: .init(latitude: 43.7615, longitude: -79.4111),
             distance: "10 KM",
             time: "21 min"
         ),
         .init(
+            id: UUID(),
             name: "Markham Diagnostic Centre",
             coordinate: .init(latitude: 43.7705, longitude: -79.3711),
             distance: "12 KM",
             time: "16 min"
         ),
         .init(
+            id: UUID(),
             name: "SM Medical",
             coordinate: .init(latitude: 43.7450, longitude: -79.3900),
             distance: "23 KM",

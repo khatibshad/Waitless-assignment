@@ -65,7 +65,7 @@ struct WATextField: View {
             if case let .error(message) = state {
                 Text(message)
                     .font(.custom("Shabnam-FD", size: 12))
-                    .foregroundColor(.red)
+                    .foregroundColor(.main)
             }
         }
         .onChange(of: text) { newValue in
@@ -150,7 +150,7 @@ private extension WATextField {
         case .success:
             return .green
         case .error:
-            return .red
+            return .main
         case .disabled:
             return .clear
         default:

@@ -42,7 +42,7 @@ struct DoctorRowView: View {
             
             WAButtonView(title: "View details", action: {
                 
-            }, style: .border(bgColor: .white, textColor: .red, borderColor: .red))
+            }, style: .border(bgColor: .white, textColor: .main, borderColor: .main))
             
         }
         .padding()

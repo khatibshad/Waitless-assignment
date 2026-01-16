@@ -23,7 +23,7 @@ struct LoginView: View {
                 .padding()
                 .frame(maxWidth: .infinity)
                 .frame(height: 250)
-                .background(Color.red)
+                .background(Color.main)
                 VStack {
                     VStack(alignment: .leading, spacing: 24) {
                         WATextField(placeholder: "Username", text: $email)
@@ -36,7 +36,7 @@ struct LoginView: View {
                             .frame( maxWidth: .infinity, alignment: .center)
                         WAButtonView(title: "Sign In With Google",action: {
                             
-                        }, style: .border(bgColor: .white, textColor: .red, borderColor: .red))
+                        }, style: .border(bgColor: .white, textColor: .main, borderColor: .main))
                     }
                     .padding()
                     .background(Color.white)

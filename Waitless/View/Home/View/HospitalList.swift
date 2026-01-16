@@ -15,6 +15,7 @@ class HospitalListViewModel: ObservableObject {
     }
     
     @Published var mode: Filter = .nearest
+    @Published var selectedHospital: Hospital?
     
 }
 
@@ -36,12 +37,18 @@ struct HospitalListView: View {
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.flexible())], spacing: 12) {
                         ForEach(hosipital) { hospital in
-                            HospitalRow()
+                            HospitalRow(hospital: hospital, isSelected: vm.selectedHospital?.id == hospital.id)
                                 .padding(.horizontal)
+                                .onTapGesture {
+                                    vm.selectedHospital = hospital
+                                    print("hospital \(hospital.id)")
+                                }
                         }
                     }
                 }
                 .background(Color.init(hex: "#EAE8E8").ignoresSafeArea())
+                
+                Spacer(minLength: 12)
             }
         }
     }

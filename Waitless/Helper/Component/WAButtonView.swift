@@ -13,7 +13,7 @@ enum WAButtonStyle {
 
     // Default style
     static let `default` = WAButtonStyle.background(
-        bgColor: .red,
+        bgColor: .main,
         textColor: .white
     )
 }
@@ -128,7 +128,7 @@ extension WAButtonStyle {
 
         WAButtonView(
             title: "Disabled",
-            action: {}, style: .background(bgColor: .red, textColor: .white), isEnabled: false
+            action: {}, style: .background(bgColor: .main, textColor: .white), isEnabled: false
         )
     }
     .padding()
