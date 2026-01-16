@@ -9,7 +9,9 @@ import SwiftUI
 
 struct LoginView: View {
     
+    @EnvironmentObject var coordinator: MainCoordinator
     @State var email = ""
+    @State var error: ErrorState?
     
     var body: some View {
         ZStack {
@@ -30,7 +32,7 @@ struct LoginView: View {
                         WATextField(placeholder: "Password", text: $email, isSecure: true)
                         WATextView(text: "Forgot Password?", style: .caption, textColor: .textBlack, multilineAlignment: .trailing)
                         WAButtonView(title: "Sign in", action: {
-                            
+                            error = .init(message: "Under develop")
                         })
                         HStack(alignment: .center, spacing: 0) {
                             WATextView(text: "Don’t have an account? ", style: .caption, textColor: .textGray, multilineAlignment: .center)
@@ -38,11 +40,11 @@ struct LoginView: View {
                         }
                         .frame( maxWidth: .infinity, alignment: .center)
                         .onTapGesture {
-                            
+                            error = .init(message: "Under develop")
                         }
 
                         WAButtonView(title: "Sign In With Google",action: {
-                            
+                            error = .init(message: "Under develop")
                         }, style: .border(bgColor: .white, textColor: .main, borderColor: .main))
                     }
                     .padding()
@@ -60,7 +62,9 @@ struct LoginView: View {
             
         }
         .navigationTitle("Profile")
+        .toast(error: $error)
         .onAppear {
+            coordinator.navigationController.setNavigationBarHidden(true, animated: false)
         }
     }
     

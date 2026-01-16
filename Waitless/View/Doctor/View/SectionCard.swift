@@ -9,12 +9,23 @@ import SwiftUI
 
 struct SectionCard<Content: View>: View {
     let title: String
+    let titleIcon: String?
+    
     @State var showDetail = true
     @ViewBuilder let content: Content
 
+    init(title: String, titleIcon: String? = nil, @ViewBuilder content: () -> Content) {
+        self.title = title
+        self.titleIcon = titleIcon
+        self.content = content()
+    }
+//    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
+                if let titleIcon {
+                    Image(titleIcon)
+                }
                 Text(title)
                     .font(.headline)
                     .padding(.bottom)

@@ -7,6 +7,8 @@
 
 import Foundation
 
+struct DummyModel: Codable {}
+
 struct Doctor: Identifiable {
     let id = UUID()
     let name: String

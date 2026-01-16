@@ -22,7 +22,9 @@ struct HomeView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
-                WATextField(placeholder: "Search", text: $vm.search, rightView: .init(image: Image("search"), action: {}))
+                WATextField(placeholder: "Search", text: $vm.search, cornerRadius: 24, rightView: .init(image: Image("search"), action: {
+                    coordinator.push(FilterView(), title: nil)
+                }))
                 VStack {
                     // MapView
                     HospitalMapView(

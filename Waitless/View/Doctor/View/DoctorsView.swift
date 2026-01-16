@@ -20,7 +20,7 @@ struct DoctorsView: View {
                     WATextField(placeholder: "Search", text: $search, cornerRadius: 24, rightView: .init(image: Image("search"), action: {}))
                         .padding(.horizontal)
                     WAButtonView(title: "", action: {
-                        
+                        coordinator.push(FilterView(), title: nil)
                     }, style: .regular(textColor: .main), image: Image("ic-filter"))
                     .frame(width: 40)
 
@@ -40,6 +40,7 @@ struct DoctorsView: View {
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
+                        coordinator.push(NotificationView(), title: "")
                     } label: {
                         Image("ic-notification")
                             .renderingMode(.template)
