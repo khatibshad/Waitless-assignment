@@ -60,13 +60,13 @@ struct DoctorRowView: View {
     }
     
     func infoRow(icon: String, text: String, color: Color = .gray) -> some View {
-           HStack(spacing: 6) {
-               Image(icon)
-               Text(text)
-                   .font(.system(size: 14))
-                   .foregroundColor(.textSecondary)
-           }
-       }
+        HStack(spacing: 6) {
+            Image(icon)
+            Text(text)
+                .font(.system(size: 14))
+                .foregroundColor(.textSecondary)
+        }
+    }
 }
 
 #Preview {

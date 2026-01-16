@@ -8,12 +8,16 @@
 import Foundation
 import CoreLocation
 
-struct Hospital: Identifiable {
+struct Hospital: Identifiable, Equatable {
     let id: UUID
     let name: String
     let coordinate: CLLocationCoordinate2D
     let distance: String
     let time: String
+    
+    static func == (lhs: Hospital, rhs: Hospital) -> Bool {
+        lhs.id == rhs.id
+    }
     
     static var local: [Hospital] = [
         .init(

@@ -12,13 +12,15 @@ import CoreLocation
 class HomeViewModel: ObservableObject {
     @Published var search = ""
     @Published var locationManage = LocationManager()
+    @Published var selectedHospital: Hospital?
 }
 
 struct HomeView: View {
     
     @EnvironmentObject var coordinator: MainCoordinator
     @ObservedObject var vm: HomeViewModel = .init()
-    
+    @State private var presentDirectionView: Bool = false
+    //@State private var selectedHospital: Hospital?
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
@@ -28,16 +30,23 @@ struct HomeView: View {
                 VStack {
                     // MapView
                     HospitalMapView(
-                        locationManager: .init())
+                        locationManager: vm.locationManage, selectedHospital: $vm.selectedHospital, actionHandler: {
+                            presentDirectionView = true
+                        })
                     .frame(maxHeight: .infinity)
-                    
+                    HospitalListView(vm: .init(selectedHospital: vm.selectedHospital) ,selectAction: { hospital in
+                        vm.selectedHospital = hospital
+                    })
+                        .frame(height: 350)
                     Spacer()
                     //BottomView
                 }
             }
             
-            HospitalListView()
-                .frame(height: 350)
+//            HospitalListView(vm: .init(selectedHospital: vm.selectedHospital) ,selectAction: { hospital in
+//                vm.selectedHospital = hospital
+//            })
+//                .frame(height: 350)
         }
         .clipShape(
             RoundedCorner(radius: 14, corners: [.bottomLeft, .bottomRight])
@@ -48,6 +57,12 @@ struct HomeView: View {
         }
         .navigationTitle("Find Hospital")
         .navigationBarTitleDisplayMode(.large)
+        .sheet(isPresented: $presentDirectionView) {
+            DirectionSheetView()
+                .presentationDetents([.height(300)])
+                .presentationCornerRadius(24)
+                .presentationDragIndicator(.visible)
+        }
     }
 }
 

@@ -49,13 +49,13 @@ struct ToastView: View {
 
     var body: some View {
         HStack {
-            Spacer()
+            mode.image
             Text(message)
                 .font(.custom("Shabnam-FD", size: 14))
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.black)
-            mode.image
+            Spacer()
         }
         .padding()
         .background(Color.init(hex: mode.bgcolor))

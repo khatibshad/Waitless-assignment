@@ -17,13 +17,23 @@ class HospitalListViewModel: ObservableObject {
     @Published var mode: Filter = .nearest
     @Published var selectedHospital: Hospital?
     
+    init(selectedHospital: Hospital?) {
+        self.selectedHospital = selectedHospital
+    }
+    
 }
 
 struct HospitalListView: View {
     
-    @ObservedObject var vm: HospitalListViewModel = .init()
-    
+    @ObservedObject var vm: HospitalListViewModel = .init(selectedHospital: nil)
     let hosipital: [Hospital] = Hospital.local
+    
+    let selectAction: (_ hospital: Hospital?)-> Void
+    
+    init(vm: HospitalListViewModel, selectAction: @escaping (_: Hospital?) -> Void) {
+        self.vm = vm
+        self.selectAction = selectAction
+    }
     
     var body: some View {
         ZStack {
@@ -41,12 +51,14 @@ struct HospitalListView: View {
                                 .padding(.horizontal)
                                 .onTapGesture {
                                     vm.selectedHospital = hospital
-                                    print("hospital \(hospital.id)")
+                                    selectAction(hospital)
                                 }
                         }
                     }
                 }
+                .padding(.bottom)
                 .background(Color.init(hex: "#EAE8E8").ignoresSafeArea())
+                .clipShape(RoundedCorner(radius: 12, corners: [.bottomLeft, .bottomLeft]))
                 
                 Spacer(minLength: 12)
             }
@@ -55,5 +67,5 @@ struct HospitalListView: View {
 }
 
 #Preview {
-    HospitalListView()
+    HospitalListView(vm: .init(selectedHospital: nil), selectAction: {_ in})
 }

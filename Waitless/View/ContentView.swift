@@ -15,6 +15,7 @@ struct ContentView: View {
         case profile
     }
     
+    @EnvironmentObject var onboardingManager: OnboardingManager
     @StateObject var homeCoordinator = MainCoordinator()
     @StateObject var doctorCoordinator = MainCoordinator()
     @StateObject var profileCoordinator = MainCoordinator()
@@ -71,6 +72,22 @@ struct ContentView: View {
     
     
     var body: some View {
+        ZStack {
+            // Main TabView
+            tabViews()
+            // Overlay onboarding if needed
+            if !onboardingManager.hasSeenOnboarding {
+                OnboardView()
+                    .transition(.opacity)
+                    .zIndex(1) // Ensure it's on top
+            }
+        }
+        .animation(.easeInOut(duration: 0.3), value: onboardingManager.hasSeenOnboarding)
+        .background(Color.gray)
+        .edgesIgnoringSafeArea(.all)
+    }
+    
+    func tabViews() -> some View {
         ZStack(alignment: .bottom) {
             // MARK: - Main Tab Views
             Group {
@@ -133,9 +150,6 @@ struct ContentView: View {
                 .padding(.bottom, 12)
             }
         }
-        //.alertView(isPresented: $updateManager.needsUpdate, title: "HOME-ALERT-UPDATE-TITLE".localized, detail: "HOME-ALERT-UPDATE-DETAIL".localized, actions: appUpdateActions())
-        .background(Color.gray)
-        .edgesIgnoringSafeArea(.all)
     }
     
     @ViewBuilder
