@@ -13,6 +13,7 @@ struct HospitalMapView: View {
     @ObservedObject var locationManager: LocationManager
     let hospitals: [Hospital] = Hospital.local
     @Binding var selectedHospital: Hospital?
+    @Binding var bottomSheetHeight: CGFloat
     let actionHandler: (_ hospital: Hospital) -> Void
     @State private var showingHospitalCard: Bool = false
     
@@ -56,6 +57,12 @@ struct HospitalMapView: View {
             }
         }
         .cornerRadius(16)
+        .onChange(of: bottomSheetHeight) { _ in
+            if let hospital = selectedHospital {
+                centerMapOnHospital(hospital)
+            }
+        }
+
         .onChange(of: selectedHospital) { hospital in
             if let hospital = hospital {
                 centerMapOnHospital(hospital)
@@ -64,14 +71,63 @@ struct HospitalMapView: View {
         .ignoresSafeArea()
     }
     
+    func adjustedRegion(
+        base: MKCoordinateRegion,
+        coveredHeight: CGFloat,
+        screenHeight: CGFloat
+    ) -> MKCoordinateRegion {
+
+        let latitudeDeltaPerPoint =
+            base.span.latitudeDelta / screenHeight
+
+        let latitudeOffset =
+            latitudeDeltaPerPoint * (coveredHeight / 2)
+
+        var region = base
+        region.center.latitude -= latitudeOffset
+        return region
+    }
+
+    
+//    private func centerMapOnHospital(_ hospital: Hospital) {
+//        let screenHeight = UIScreen.main.bounds.height
+//        let coveredHeight = screenHeight - (bottomSheetHeight ?? 0.0)
+//        
+//        withAnimation(.easeInOut) {
+//            let reg = MKCoordinateRegion(
+//                center: hospital.coordinate,
+//                span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+//            )
+//            locationManager.region = adjustedRegion(
+//                base: reg,
+//                coveredHeight: coveredHeight,
+//                screenHeight: screenHeight
+//            )
+////            locationManager.region = MKCoordinateRegion(
+////                center: hospital.coordinate,
+////                span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+////            )
+//        }
+//    }
+    
     private func centerMapOnHospital(_ hospital: Hospital) {
+        let screenHeight = UIScreen.main.bounds.height
+        let coveredHeight = screenHeight - (bottomSheetHeight ?? 0.0)
+
+        let baseRegion = MKCoordinateRegion(
+            center: hospital.coordinate,
+            span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        )
+
         withAnimation(.easeInOut) {
-            locationManager.region = MKCoordinateRegion(
-                center: hospital.coordinate,
-                span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            locationManager.region = adjustedRegion(
+                base: baseRegion,
+                coveredHeight: coveredHeight,
+                screenHeight: screenHeight
             )
         }
     }
+
     
     private func calculateDistance(from: CLLocationCoordinate2D?, to: CLLocationCoordinate2D) -> Double {
         guard let from = from else { return 0 }
@@ -82,9 +138,9 @@ struct HospitalMapView: View {
 }
 
 
-#Preview {
-    HospitalMapView(locationManager: .init(), selectedHospital: .constant(.local[0]), actionHandler: {_ in})
-}
+//#Preview {
+//    HospitalMapView(locationManager: .init(), selectedHospital: .constant(.local[0]), actionHandler: {_ in})
+//}
 
 struct HospitalInfoCard: View {
     let hospital: Hospital

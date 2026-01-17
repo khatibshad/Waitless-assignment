@@ -83,7 +83,7 @@ struct ContentView: View {
             }
         }
         .animation(.easeInOut(duration: 0.3), value: onboardingManager.hasSeenOnboarding)
-        .background(Color.gray)
+        .background(Color.white)
         .edgesIgnoringSafeArea(.all)
     }
     
@@ -101,7 +101,7 @@ struct ContentView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.bottom, currentCoordinator?.isTabBarHidden == true ? 0 : 60)
+            .padding(.bottom, currentCoordinator?.isTabBarHidden == true ? 0 : 80)
             .edgesIgnoringSafeArea(.top)
             
             // MARK: - Custom Tab Bar
@@ -138,6 +138,7 @@ struct ContentView: View {
                         selectedTab = .profile
                     }
                 }
+                //.offset(y: -10)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
                 .frame(maxWidth: .infinity)
@@ -147,7 +148,7 @@ struct ContentView: View {
                         .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: -2)
                 )
                 .padding(.horizontal, 25)
-                .padding(.bottom, 12)
+                .padding(.bottom, 20)
             }
         }
     }
@@ -160,11 +161,16 @@ struct ContentView: View {
     ) -> some View {
 
         if selectedTab == tab {
-            VStack(spacing: 2) {
+            HStack(spacing: 2) {
                 Image(systemName: icon)
+                    .foregroundColor(Color.main)
                 Text(title)
                     .font(.system(size: 11, weight: .semibold))
+                    .foregroundColor(Color.main)
             }
+            .padding(8)
+            .background(Color.main.opacity(0.2))
+            .cornerRadius(22)
         } else {
             Image(systemName: icon)
         }
@@ -175,4 +181,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(OnboardingManager())
 }

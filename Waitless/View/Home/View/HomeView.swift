@@ -20,9 +20,12 @@ struct HomeView: View {
     @EnvironmentObject var coordinator: MainCoordinator
     @ObservedObject var vm: HomeViewModel = .init()
     @State private var presentDirectionView: Hospital?
+    @State private var sheetPosition: SheetPosition = .collapsed
+    @State private var bottomSheetHeight: CGFloat = 0
+    
     //@State private var selectedHospital: Hospital?
     var body: some View {
-        ZStack(alignment: .bottom) {
+        ZStack {
             VStack {
                 WATextField(placeholder: "Search", text: $vm.search, cornerRadius: 24, rightView: .init(image: Image("search"), action: {
                     coordinator.push(FilterView(), title: nil)
@@ -30,28 +33,40 @@ struct HomeView: View {
                 VStack {
                     // MapView
                     HospitalMapView(
-                        locationManager: vm.locationManage, selectedHospital: $vm.selectedHospital, actionHandler: { hospital in
+                        locationManager: vm.locationManage, selectedHospital: $vm.selectedHospital, bottomSheetHeight: $bottomSheetHeight, actionHandler: { hospital in
                             presentDirectionView = hospital
                         })
                     .frame(maxHeight: .infinity)
-                    HospitalListView(vm: .init(selectedHospital: vm.selectedHospital) ,selectAction: { hospital in
-                        vm.selectedHospital = hospital
-                    })
-                        .frame(height: 350)
-                    Spacer()
+                    
                     //BottomView
                 }
             }
-            
-//            HospitalListView(vm: .init(selectedHospital: vm.selectedHospital) ,selectAction: { hospital in
-//                vm.selectedHospital = hospital
-//            })
-//                .frame(height: 350)
+            BottomSheet(position: $sheetPosition) {
+                GeometryReader { geo in
+                    let visibleHeight =
+                                sheetPosition.visibleHeight(screenHeight: geo.size.height)
+                    Color.clear
+                                .onAppear {
+                                    bottomSheetHeight = visibleHeight
+                                }
+                                .onChange(of: sheetPosition) { _ in
+                                    bottomSheetHeight = visibleHeight
+                                }
+                    HospitalListView(
+                        vm: .init(selectedHospital: vm.selectedHospital),
+                        visibleHeight: visibleHeight,
+                        selectAction: { hospital in
+                            vm.selectedHospital = hospital
+                        }
+                    )
+                }
+            }
+                        
         }
         .clipShape(
             RoundedCorner(radius: 14, corners: [.bottomLeft, .bottomRight])
         )
-        .padding()
+        .padding(.horizontal)
         .onAppear {
             coordinator.navigationController.title = "Home"
         }

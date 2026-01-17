@@ -27,11 +27,12 @@ struct HospitalListView: View {
     
     @ObservedObject var vm: HospitalListViewModel = .init(selectedHospital: nil)
     let hosipital: [Hospital] = Hospital.local
-    
+    let visibleHeight: CGFloat
     let selectAction: (_ hospital: Hospital?)-> Void
     
-    init(vm: HospitalListViewModel, selectAction: @escaping (_: Hospital?) -> Void) {
+    init(vm: HospitalListViewModel, visibleHeight: CGFloat, selectAction: @escaping (_: Hospital?) -> Void) {
         self.vm = vm
+        self.visibleHeight = visibleHeight
         self.selectAction = selectAction
     }
     
@@ -57,6 +58,7 @@ struct HospitalListView: View {
                     }
                 }
                 .padding(.bottom)
+                .frame(height: max(0, visibleHeight - 80))
                 .background(Color.init(hex: "#EAE8E8").ignoresSafeArea())
                 .clipShape(RoundedCorner(radius: 12, corners: [.bottomLeft, .bottomLeft]))
                 
@@ -67,5 +69,5 @@ struct HospitalListView: View {
 }
 
 #Preview {
-    HospitalListView(vm: .init(selectedHospital: nil), selectAction: {_ in})
+    HospitalListView(vm: .init(selectedHospital: nil), visibleHeight: 100, selectAction: {_ in})
 }
